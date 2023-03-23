@@ -238,7 +238,7 @@ function Neo4jD3(_selector, _options) {
                    })
                    .html(function(d) {
                        var _icon = icon(d);
-                       return _icon ? '&#x' + _icon : d.id;
+                       return _icon ? '&#x' + _icon : "";
                    });
     }
 
