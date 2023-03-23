@@ -61,19 +61,19 @@ function Neo4jD3(_selector, _options) {
     function appendImageToNode(node) {
         return node.append('image')
                    .attr('height', function(d) {
-                       return icon(d) ? '24px': '40px';
+                       return icon(d) ? '24px': '50px';
                    })
                    .attr('x', function(d) {
-                       return icon(d) ? '5px': '-21px';
+                       return icon(d) ? '5px': '-25px';
                    })
                    .attr('xlink:href', function(d) {
                        return image(d);
                    })
                    .attr('y', function(d) {
-                       return icon(d) ? '5px': '-21px';
+                       return icon(d) ? '5px': '-25px';
                    })
                    .attr('width', function(d) {
-                       return icon(d) ? '24px': '40px';
+                       return icon(d) ? '24px': '50px';
                    });
     }
 
@@ -283,7 +283,7 @@ function Neo4jD3(_selector, _options) {
                 .attr('pointer-events', 'none')
                 .attr('text-anchor', 'middle')
                 .text(function(d) {
-                    return d.type;
+                    return "";
                 });
     }
 
