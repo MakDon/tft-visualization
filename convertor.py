@@ -19,6 +19,7 @@ neo_graph = {
     }],
     "errors": []
 }
+idToNameMap = {}
 
 def download_img(data_set):
     for k, data in data_set["data"].items():
@@ -36,10 +37,11 @@ def download_all_img():
 
 
 def convert_to_neo4j_data():
-    parse_chess()
     parse_job()
     parse_race()
     parse_trait()
+    parse_chess()
+    # neo_graph["results"][0]["data"][0]["graph"]["relationships"] = []
     with open("./json/neo4jData.json", "w") as fp:
         json.dump(neo_graph, fp)
     with open("./neo4jd3/docs/json/neo4jData.json", "w") as fp:
@@ -47,17 +49,46 @@ def convert_to_neo4j_data():
     return
 
 def parse_chess():
-    nodes = neo_graph["results"][0]["data"][0]["graph"]["nodes"]
+    nodes =         neo_graph["results"][0]["data"][0]["graph"]["nodes"]
+    relationships = neo_graph["results"][0]["data"][0]["graph"]["relationships"]
     for k, data in chess["data"].items():
         # TODO(makdon): 还需要处理羁绊
         node = {
             "id": data["name"],
             "image": data["picture"],
-            "labels": [],
+            "labels": [data["name"]],
             "properties": data
         }
         nodes.append(node)
-    pass
+        classes = data["class"].split()
+        for class_ in classes:
+            class_ = idToNameMap.get(class_)
+            if class_ is not None:
+                rls = {
+                    "id": data["name"] + "-" + class_,
+                    "startNode": data["name"],
+                    "endNode": class_,
+                    "type": "has_class",
+                    "properties": {
+                        "id": data["name"] + "-" + class_,
+                    }
+                }
+                relationships.append(rls)
+        species = data["species"]
+        species = idToNameMap.get(species)
+        if species is not None:
+            rls = {
+                "id": data["name"] + "-" + species,
+                "startNode": data["name"],
+                "endNode": species,
+                "type": "has_species",
+                "properties": {
+                    "id": data["name"] + "-" + species,
+                }
+            }
+            relationships.append(rls)
+
+        
 
 def parse_job():
     nodes = neo_graph["results"][0]["data"][0]["graph"]["nodes"]
@@ -69,6 +100,7 @@ def parse_job():
             "properties": data
         }
         nodes.append(node)
+        idToNameMap[data["id"]] = data["name"]
 
 def parse_race():
     nodes = neo_graph["results"][0]["data"][0]["graph"]["nodes"]
@@ -80,6 +112,7 @@ def parse_race():
             "properties": data
         }
         nodes.append(node)
+        idToNameMap[data["id"]] = data["name"]
 
 def parse_trait():
     nodes = neo_graph["results"][0]["data"][0]["graph"]["nodes"]
@@ -91,6 +124,7 @@ def parse_trait():
             "properties": data
         }
         nodes.append(node)
+        idToNameMap[data["id"]] = data["name"]
 
 
 if __name__ == "__main__":
