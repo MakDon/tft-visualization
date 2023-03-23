@@ -94,4 +94,4 @@ def parse_trait():
 
 
 if __name__ == "__main__":
-    download_all_img()
+    convert_to_neo4j_data()
