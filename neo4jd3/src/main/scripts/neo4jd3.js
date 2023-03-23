@@ -61,19 +61,19 @@ function Neo4jD3(_selector, _options) {
     function appendImageToNode(node) {
         return node.append('image')
                    .attr('height', function(d) {
-                       return icon(d) ? '24px': '30px';
+                       return icon(d) ? '24px': '40px';
                    })
                    .attr('x', function(d) {
-                       return icon(d) ? '5px': '-15px';
+                       return icon(d) ? '5px': '-21px';
                    })
                    .attr('xlink:href', function(d) {
                        return image(d);
                    })
                    .attr('y', function(d) {
-                       return icon(d) ? '5px': '-16px';
+                       return icon(d) ? '5px': '-21px';
                    })
                    .attr('width', function(d) {
-                       return icon(d) ? '24px': '30px';
+                       return icon(d) ? '24px': '40px';
                    });
     }
 
@@ -428,6 +428,9 @@ function Neo4jD3(_selector, _options) {
 
     function image(d) {
         var i, imagesForLabel, img, imgLevel, label, labelPropertyValue, property, value;
+        if (d.image) {
+            return d.image
+        }
 
         if (options.images) {
             imagesForLabel = options.imageMap[d.labels[0]];
