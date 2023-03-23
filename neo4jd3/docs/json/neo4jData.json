@@ -1,9 +1,11 @@
 {
     "results": [{
         "columns": ["user", "entity"],
-        "data": [{
+        "data": [
+            {
             "graph": {
-                "nodes": [{
+                "nodes": [
+                    {
                     "id": "1",
                     "labels": ["User"],
                     "properties": {
@@ -177,7 +179,8 @@
                         "url": "https://www.google.com/#q=\"neo4jd3\""
                     }
                 }],
-                "relationships": [{
+                "relationships": [
+                    {
                     "id": "1",
                     "type": "HAS_PHONE_NUMBER",
                     "startNode": "1",
