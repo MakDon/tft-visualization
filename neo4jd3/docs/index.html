@@ -91,19 +91,6 @@
                     minCollision: 60,
                     neo4jDataUrl: 'json/neo4jData.json',
                     nodeRadius: 25,
-                    onNodeDoubleClick: function(node) {
-                        switch(node.id) {
-                            case '25':
-                                // Google
-                                window.open(node.properties.url, '_blank');
-                                break;
-                            default:
-                                var maxNodes = 5,
-                                    data = neo4jd3.randomD3Data(node, maxNodes);
-                                neo4jd3.updateWithD3Data(data);
-                                break;
-                        }
-                    },
                     onRelationshipDoubleClick: function(relationship) {
                         console.log('double click on relationship: ' + JSON.stringify(relationship));
                     },

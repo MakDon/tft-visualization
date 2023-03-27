@@ -4,6 +4,8 @@
 
 function Neo4jD3(_selector, _options) {
     var container, graph, info, node, nodes, relationship, relationshipOutline, relationshipOverlay, relationshipText, relationships, selector, simulation, svg, svgNodes, svgRelationships, svgScale, svgTranslate,
+        infoOnHold = false,
+        infoId = undefined,
         classes2colors = {},
         justLoaded = false,
         numClasses = 0,
@@ -144,6 +146,17 @@ function Neo4jD3(_selector, _options) {
                        return classes;
                    })
                    .on('click', function(d) {
+                    console.log(infoId, d)
+                        if (!infoOnHold || infoId != d.id) {
+                           updateInfo(d);
+                           infoOnHold = true
+                           infoId = d.id
+                        } else {
+                           clearInfo(d);
+                           infoOnHold = false 
+                           infoId = undefined
+                        }
+                    // TODO
                        d.fx = d.fy = null;
 
                        if (typeof options.onNodeClick === 'function') {
@@ -158,7 +171,7 @@ function Neo4jD3(_selector, _options) {
                        }
                    })
                    .on('mouseenter', function(d) {
-                       if (info) {
+                       if (info && !infoOnHold) {
                            updateInfo(d);
                        }
 
@@ -167,7 +180,7 @@ function Neo4jD3(_selector, _options) {
                        }
                    })
                    .on('mouseleave', function(d) {
-                       if (info) {
+                       if (info && !infoOnHold) {
                            clearInfo(d);
                        }
 
@@ -254,11 +267,6 @@ function Neo4jD3(_selector, _options) {
                            .on('dblclick', function(d) {
                                if (typeof options.onRelationshipDoubleClick === 'function') {
                                    options.onRelationshipDoubleClick(d);
-                               }
-                           })
-                           .on('mouseenter', function(d) {
-                               if (info) {
-                                   updateInfo(d);
                                }
                            });
     }

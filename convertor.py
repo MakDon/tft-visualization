@@ -52,7 +52,6 @@ def parse_chess():
     nodes =         neo_graph["results"][0]["data"][0]["graph"]["nodes"]
     relationships = neo_graph["results"][0]["data"][0]["graph"]["relationships"]
     for k, data in chess["data"].items():
-        # TODO(makdon): 还需要处理羁绊
         node = {
             "id": data["name"],
             "image": data["picture"],
@@ -60,7 +59,7 @@ def parse_chess():
             "properties": data
         }
         nodes.append(node)
-        classes = data["class"].split()
+        classes = data["class"].split("|")
         for class_ in classes:
             class_ = idToNameMap.get(class_)
             if class_ is not None:

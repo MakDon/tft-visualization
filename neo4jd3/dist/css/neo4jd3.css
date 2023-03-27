@@ -17,15 +17,14 @@ body {
   font-size: 16px;
   padding: 10px;
   position: absolute;
+  max-width: 500px;
 }
 .neo4jd3-info a {
-  border: 1px solid;
-  display: inline-block;
+  display: -ms-flexbox;
+  display: flex;
   font-size: 14px;
-  line-height: 1.428571429;
   margin-left: 5px;
   margin-top: 5px;
-  padding: 6px 12px;
 }
 .neo4jd3-info a.class {
   color: white;
